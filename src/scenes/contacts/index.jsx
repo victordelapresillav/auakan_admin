@@ -1,14 +1,34 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataContacts } from "../../data/mockData";
+//import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
+import React, { useState, useEffect } from 'react';
+
 
 const Contacts = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [data, setData] = useState([]);
 
+  useEffect(() => {
+    fetch('https://auakanapi.000webhostapp.com/api.php?request=getUsers')
+      .then(response => response.json())
+      .then(data => setData(data))
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+  const columns2 = [
+    { field: 'id_usuario', headerName: 'ID Usuario', width: 150 },
+    { field: 'nombre', headerName: 'Nombre', width: 150 },
+    { field: 'celular', headerName: 'Celular', width: 150 },
+    { field: 'tipo', headerName: 'Tipo', width: 200 },
+    { field: 'password', headerName: 'Contraseña', width: 150 },
+    { field: 'rnpa', headerName: 'RNPA', width: 150 },
+    { field: 'domicilio', headerName: 'Domicilio', width: 150 },
+  ];
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
     { field: "registrarId", headerName: "Registrar ID" },
@@ -91,8 +111,9 @@ const Contacts = () => {
         }}
       >
         <DataGrid
-          rows={mockDataContacts}
-          columns={columns}
+          rows={data}
+          columns={columns2}
+          getRowId={(row) => row.id_usuario} 
           components={{ Toolbar: GridToolbar }}
         />
       </Box>
