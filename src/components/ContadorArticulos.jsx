@@ -18,18 +18,31 @@ export function ContadorArticulos() {
       redirect: 'follow'
     };
 
-    fetch("http://dev.auakan.com/api/index.php/v1/content/articles", requestOptions)
+    fetch("https://dev.auakan.com/api/index.php/v1/content/articles", requestOptions)
       .then(response => response.json())
       .then(result => {
-        const totalArticles = result.length;
+        const articleIds = result.map(article => article.id); // Obtener los IDs de los artículos
+        const totalArticles = articleIds.length; // Obtener el total de IDs
         setTotalArticles(totalArticles); // Almacenar el valor en el estado
+        guardarJSON(result); // Guardar los datos en un archivo JSON local
+        console.log(result);
       })
       .catch(error => console.log('error', error));
   }
 
+  function guardarJSON(data) {
+    const jsonData = JSON.stringify(data);
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'articles.json';
+    link.click();
+  }
+
   return (
     <div>
-      justo ahora {totalArticles} Productos son visibles
+      Justo ahora {totalArticles} productos son visibles en Auakan
     </div>
   );
 }
