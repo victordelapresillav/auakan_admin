@@ -172,7 +172,7 @@ export function BotonPublicar({ tarjetaId, publicado, onPublicar, onRetirar }) {
           <strong>RETIRAR</strong>
         </button>
       ) : (
-        <button variant="contained" color="primary"  /*className={styles.botonescontainer}*/ onClick={handlePublicar}>
+        <button variant="contained" color="primary"  className={styles.botonescontainer} onClick={handlePublicar}>
           <strong>PUBLICAR</strong>
         </button>
       )}
