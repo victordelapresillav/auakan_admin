@@ -33,3 +33,9 @@ body,
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+a{
+  text-decoration: none;
+  color: inherit;
+  /*color:azure;*/
+}
+
